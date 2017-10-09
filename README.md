@@ -116,3 +116,44 @@
     + Bloques
     + Cadenas de bloques
     + El bloque génesis
+
+## Semana 5 (2017-10-07)
+- Sistemas distribuidos a bajo nivel
+ - Sistema Operativo
+ - Aplicación
+ - Protocolos de red
+   - UDP
+   - TCP
+   - FTP
+   - SMTP
+   - HTTP
+   - SSL/TLS
+     - FTPS
+     - HTTPS
+  - Llamadas asincronas
+  - Llamadas sincronas
+- Tipos de paralelismo
+  - Servidor/Trabajador
+  - Modelo de Equipo
+  - Modelo de Entubamiento (pipeline)
+- Problemas del paralelismo
+  - Condiciones de carrera
+  - Mutex
+- Seguridad
+  - VPN
+  - NAT
+  - VPC
+  Algoritmos de cifrado
+  - PKI
+  - RSA
+  - Diffie-Hellman
+  - AES
+  Algoritmos de hashing
+  - SHA1
+  - MD5
+  OpenSSL
+  - Certificado (llave pública)
+  - Llave Privada
+  - Certificado de cliente
+  - Firma digital
+  - Autoridad de cetificación
