@@ -69,3 +69,50 @@
   - Service Discovery
   - CI/CD
 - Explicación del Proyecto 1
+
+## Semana 4 (2017-09-30)
+- Arquitecturas de sistemas basados en microservicios
+  - Modelo Cliente-Servidor
+    - Servidor
+      - Aplicaciones inter servidores
+      - Responsabilidades
+        - Proveer recursos
+        - Almacenar las operaciones
+        - Validar las entradas
+    - Cliente
+      - Aplicación con GUI
+      - Responsabilidades
+        - Organizar datos
+        - Interfaz Hombre-Máquina
+        - Puede ser otra aplicación de tipo Servidor que requiere datos de otros servidores
+  - Llamada a Procedimientos Remotos (RPC)
+    - Invocación a otros servicios
+    - Transparencia al invocar funciones
+    - Formas de implemetación
+      - RPC usando servicios REST
+        + JSON
+        + XML
+      - RPC empaquetando los bytes crudos de los parámetros
+        + Diferencias por hardware
+        + Forma canónica
+        + Diccionario de arquitecturas
+        + Uso de middleware
+  - Modelo Editor/Suscriptor
+    + Modelo centralizado
+    + Bajo acoplamiento del editor con los suscriptores
+    + Alto acoplamiento de los suscriptores al editor
+    + Editor
+      + Envía mensajes a una cola
+      + Flujo de mensajes
+    + Suscriptor
+      + Procesa mensajes
+      + Facil adición de suscriptores
+  - Modelo de cadena de bloques
+    + Modelo descentralizado
+    + Nodos
+    + Minería
+    + Transacciones
+    + Hechos
+    + Bloques
+    + Cadenas de bloques
+    + El bloque génesis
