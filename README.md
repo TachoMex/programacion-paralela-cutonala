@@ -59,3 +59,13 @@
       - Utilización de recursos
       - Balanceador de carga
 - Asignación de la práctica 2
+
+## Semana 3 (2017-09-23)
+- Administración de recursos
+  - Administración de repositorios
+  - Orquestación
+  - Administración de configuraciones
+  - Desplegar aplicaciones
+  - Service Discovery
+  - CI/CD
+- Explicación del Proyecto 1
