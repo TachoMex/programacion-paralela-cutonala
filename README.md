@@ -6,6 +6,7 @@
 * 3.- [Fecha de entrega 2017-10-07](/practica_3/indicaciones.md)
 * 4.- [Fecha de entrega 2017-10-21](/practica_4/indicaciones.md)
 * 5.- [Fecha de entrega 2017-10-28](/practica_5/indicaciones.md)
+* 6.- [Fecha de entrega 2017-11-05](/practica_6/indicaciones.md)
 
 ## Temas vistos
 
