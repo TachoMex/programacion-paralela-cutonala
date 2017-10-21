@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+*.log
+
+practica_7/angular-example/public/components*
+examenes/*
+practica_3/Gemfile.lock
