@@ -159,3 +159,12 @@
   - Certificado de cliente
   - Firma digital
   - Autoridad de cetificación
+
+# Evaluación
+- Tareas 10
+  - Modelo de trenes
+  - Principios de programación
+- Examen 40 (2 parciales)
+- Prácticas 30 (6 prácticas, 5 puntos cada una)
+- Proyecto 30 (Chat, requiere prácticas terminadas)
+- Participación 10.
