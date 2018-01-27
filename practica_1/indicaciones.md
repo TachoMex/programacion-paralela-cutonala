@@ -56,8 +56,10 @@
  - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
  - https://help.github.com/articles/create-a-repo/
  - https://rubyinstaller.org/
+ - Circuit Breaker https://martinfowler.com/bliki/CircuitBreaker.html
  - Instalar rubocop https://github.com/bbatsov/rubocop/blob/master/manual/installation.md
   - Como hacer un commit https://chris.beams.io/posts/git-commit/
+
 
 ### Instalar ruby en linux
 https://stackoverflow.com/questions/37720892/you-dont-have-write-permissions-for-the-var-lib-gems-2-3-0-directory
