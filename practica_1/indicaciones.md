@@ -7,12 +7,15 @@
 - Familiarizarse con el lenguaje Ruby
 - Uso de listas
 - Uso de cadenas
+- Introducción a los patrones de diseño
+- Uso de clases y modulos
+- Uso de bloques
 - Salida estándar
 - Uso de linters
 - Uso de un sistema de control de versiones
 
 ## Entorno recomendado
-- IDE: Sublime Text, Atom, RubyMine
+- IDE: Sublime Text, Atom, RubyMine, VS code
 - Sistema Operativo recomendado: Linux
 - Git
     - Instalación
@@ -37,6 +40,7 @@
   + la función se llamará `sum_squares` y recibirá un arreglo.
   + Ejemplo:
     * `sum_squares([1, 2, 3]) = 14`
+- Implementar un "decorator" que implemente el patrón de diseño "Circuit Breaker"
 - 5% extra si no tiene ningún comentario de rubocop
 - 5% extra si está ordenada la historia en git. (ver recursos de git)
 
@@ -44,7 +48,7 @@
 - Enviar por correo el enlace al repositorio en github. Sólo se recibirán las tareas por éste medio.
 - El contenido de la práctica deberá ir en la carpeta `/practica_1/practica.rb`
 - Por favor incluyan el archivo `/practica_1/test.rb` también que está en este repositorio para poder hacer las pruebas.
-- Fecha de entrega antes del Sábado 16 de septiembre de 2017 23:59:59 (GMT-5)
+- Fecha de entrega antes del Sábado 10 de Febrero de 2018 23:59:59
 
 ## Recursos de ayuda:
  - https://es.wikipedia.org/wiki/Pal%C3%ADndromo
