@@ -1,0 +1,23 @@
+<div id="content" class="container">
+  <div ng-controller="activityCtrl">
+    <h2> TODO - List </h2>
+    <table class="table table-hover">
+      <tr>
+        <td> Status </td> <td> Description </td>
+      </tr>
+      <tr ng-repeat="task in controller.list">
+        <td> <input type="checkbox" ng-model="task.status"/> </td>
+        <td>{{task.description}}</td>
+      </tr>
+    </table>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="controller.addTask();">
+          <span class="glyphicon glyphicon-plus"/>
+        </button>
+      </span>
+      <textarea type="text" class="form-control" placeholder="Task description"
+             aria-describedby="basic-addon1" ng-model="controller.newTask"> </textarea>
+    </div>
+  </div>
+</div>
