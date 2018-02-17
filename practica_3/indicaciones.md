@@ -1,40 +1,43 @@
-# Práctica 3
-#### Grapes makes wine, wine makes REST.
+#### There's always a Sequel
 
 ## Objetivos
-- Levantar un servidor WEB en Ruby.
-- Aprender a utilizar Grape.
-- Aprender a implementar servicios REST.
-- Conocer los verbos del protocolo HTTP.
-- Conocer los códigos de respuesta de HTTP.
+- Utilización de bases de datos en Ruby
+- Implementación de clases en Ruby
+- Uso de herencia
+- Uso de polimorfismo
+- Conocimiento de almacenamiento de contraseñas
+- Patrones de diseño "Dependency Injection" y "Factory"
 
 ## Indicaciones
-- Crear un servidor de autenticación con lo realizado en la práctica 2.
-- El servicio debe permitir la gestión de:
-    - *usuarios*
-    - *sitios*
-    - *contraseñas*.
-- Para cada servicio, se deberá soportar altas, bajas y consultas. La modificación puede realizarse como una baja y una alta.
-- Los nombres de usuarios y de los sitios deben estar limitados a letras, números y guion bajo.
-- La alta de una contraseña se entenderá como el acceso a un sitio.
-- La aplicación deberá servir de solo objetos serializados con el formato JSON
-- 10% adicional si se implementa JWT para firmar los tokens.
+Con la base de datos de la práctica 2:
+- Abstraer en una clase abstracta de forma que se pueda reutilizar las siguientes operaciones:
+   * Altas
+   * Bajas
+   * Consultas
+ - Por cada entidad debe haber una clase que admita los 3 tipos de consulta ABC:
+ - Pasar las conexiones a la base de datos con el patrón "Dependency Injection"
+ - Los metodos requeridos son:
+  * Con el patrón factory:
+    - `create` Crea el objecto y lo almacena en la base de datos.
+    - `by_id` un método de clase que crea el objeto desde la base de datos.
+    - `list_all` que trae todos los objetos de la base de datos.
 
-## Especificaciones técnicas
-### Rutas a implementar
-- `GET /api/sites` - listar los usuarios
-- `GET /api/sites/:site/users` - listar usuarios registrados en el sitio
-- `POST /api/sites/` - crear sitio
-- `POST /api/sites/:site/auth` - autenticar usuario, responderá con un token.
-- `POST /api/sites/:site/register` - registrar usuario en el sitio.
-### Ayuda
-- Se deberá implementar el formato JSend para los mensajes. Se vale utilizar la gema RubyAntServer.
-- Dentro viene una plantilla con el servidor corriendo.
-- La gema RubyAntServer no esta disponible aun en rubygems.
+  - `initialize` un constructor que crea el objeto detallando los campos.
+ - Las contraseñas deben guardarse utilizando salteados (Bcrypt)
+ - 5% extra por implementar una función para actualizar la contraseña.
+ - 5% extra si no tiene ningún comentario de rubocop
 
+## Forma de entrega
+- La tarea debe subirse al repositorio creado en la practica 1, pero esta vez en la carpeta `practica_2`
+- Por favor incluyan el archivo `/practica_2/test.rb` también que está en este repositorio para poder hacer las pruebas.
+- Agregar todos los archivos necesarios, respetando las siguientes carpetar:
+  * `/practica_2/models/migrations` archivos de migración. Deben ir numerados a 3 digitos empezando por `001`.
+  * `/practica_2/config/config.yaml.sample` Contiene un archivo con keys falsos a modo de ejemplo. El archivo real estará aqui mismo sin la extension sample.
+  * `/practica_2/controllers/` Contiene las clases solicitadas en la práctica
+  * incluir un `/practica_2/Gemfile` donde se definan las dependencias.
+- Fecha de entrega antes del Sábado 3 de Marzo de 2018 23:59:59
 
-### Recursos
-- Gema RubyAntServer https://github.com/KueskiEngineering/ruby-ant-server
-- Especificaciones JSend https://labs.omniti.com/labs/jsend
-- Postman para hacer las pruebas desde chrome. https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop
-- JWT https://github.com/jwt/ruby-jwt
+## Recursos de ayuda
+- Consultas en Sequel. http://sequel.jeremyevans.net/rdoc/files/doc/cheat_sheet_rdoc.html
+- La forma correcta de almacenar contraseñas. https://crackstation.net/hashing-security.htm
+- Bcrypt en Ruby https://github.com/codahale/bcrypt-ruby
