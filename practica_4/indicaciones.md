@@ -1,38 +1,37 @@
 # Práctica 4
-#### Queues for all the world!
+#### Grapes makes wine, wine makes REST.
 
 ## Objetivos
-- Implementar un sistema de colas distribuidas
-- Uso de transacciones de bases de datos.
+- Levantar un servidor WEB en Ruby.
+- Aprender a utilizar Grape.
+- Aprender a implementar servicios REST.
+- Conocer los verbos del protocolo HTTP.
+- Conocer los códigos de respuesta de HTTP.
 
 ## Indicaciones
-- Implementar un servicio que provea de colas mediante un servidor web.
-- Las especificaciones técnicas de implementación conjugan lo hecho en las prácticas anteriores.
-- Se deberán utilizar transacciones para las operaciones de lectura y escritura sobre las colas.
-- Las operaciones soportadas son:
-   - Crear una cola por un nombre.
-   - Listar las colas existentes.
-   - Suscribir usuario a una cola.
-   - Marcar todos los mensajes pendientes como leídos.
-   - Escribir un mensaje en la cola.
-   - Leer el siguiente mensaje de la cola.
+- Crear un servidor de autenticación con lo realizado en la práctica 3.
+- El servicio debe permitir la gestión de:
+    - *usuarios*
+    - *sitios*
+    - *contraseñas*.
+- Para cada servicio, se deberá soportar altas, bajas y consultas. La modificación puede realizarse como una baja y una alta.
+- Los nombres de usuarios y de los sitios deben estar limitados a letras, números, guiones, puntos.
+- La alta de una contraseña se entenderá como el acceso a un sitio.
+- La aplicación deberá servir de solo objetos serializados con el formato JSON
+- Implementa JWT para firmar los tokens.
 
 ## Especificaciones técnicas
 ### Rutas a implementar
-- GET `/api/queues` listar
-- POST `/api/queues` crear, el nombre se manda en el campo 'queue'
-- POST `/api/:queue/subscribe` suscribirse, el nombre del suscriptor se manda en el campo subscriber
-- POST `/api/:queue/purge` marcar mensajes pendientes como leidos.
-- POST `/api/:queue` escribe un mensaje. El cuerpo de la petición es el contenido del mensaje.
-- POST `/api/:queue/:subscriber` Lee el siguiente mensaje del subscriptor.
-### Casos esquina
-- Si alguien se suscribe a una cola existente y que ya tiene mensajes, debera de ver los mensajes anteriores.
-- Si se tiene un mensaje y varios solicitan a la par el mismo mensaje, solo uno debe recibirlo.
-- Si se escriben 2 mensajes a la par, se debe asegurar de que el servicio almacene ambos mensajes.
-### Extra
-- 10% extra
-  - Soporta en POST `/api/:queue/:subscriber` la opción `skip_delete` al momento de leer el mensaje, que pone el mensaje en espera. Se debe agregar un identificador al mensaje y retornarlo.
-  - Agregar POST `/api/:queue/:subscriber/mark_done/:message` que recibe el identificador del mensaje y lo pone como
-  hecho.
-  - Si pasan 5 minutos y un mensaje que no se borró nunca se confirmó, se debe marcar como no leido y estar en espera de nuevo.
-  - Si se confirma un mensaje como procesado 5 minutos después, no se podrá confirmar.
+- `GET /api/sites` - listar los sitios
+- `GET /api/sites/:site/users` - listar usuarios registrados en el sitio
+- `POST /api/sites/` - crear sitio
+- `POST /api/sites/:site/auth` - autenticar usuario, responderá con un token.
+- `POST /api/sites/:site/` - registrar usuario en el sitio.
+### Ayuda
+- Se deberá implementar el formato JSend para los mensajes.
+- Dentro viene una plantilla con el servidor corriendo.
+
+### Recursos
+- Especificaciones JSend https://labs.omniti.com/labs/jsend
+- Postman para hacer las pruebas desde chrome. https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop
+- JWT https://github.com/jwt/ruby-jwt
