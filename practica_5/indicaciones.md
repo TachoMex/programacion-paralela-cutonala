@@ -1,39 +1,38 @@
 # Práctica 5
-#### One does only move the body into the file, and viceversa
+#### Queues for all the world!
 
 ## Objetivos
-- Implementar un servidor de archivos.
-- Manejo de archivos y directorios en ruby.
-- Aprender el concepto de 'directory traversal'
+- Implementar un sistema de colas distribuidas
+- Uso de transacciones de bases de datos.
 
 ## Indicaciones
-Crear una aplicación en Grape similar a las prácticas 3 y 4 que soporte las siguientes operaciones:
-- mostrar los archivos de un directorio
-- crear un directorio
-- crear un archivo
-- borrar un archivo
-- copiar un archivo/carpeta
-- mover un archivo/carpeta
-Los archivos deben ir en una carpeta dentro del proyecto llamada `resources`. Todos los archivos que el usuario mande deben ser almacenados dentro de esa carpeta. 
+- Implementar un servicio que provea de colas mediante un servidor web.
+- Las especificaciones técnicas de implementación conjugan lo hecho en las prácticas anteriores.
+- Se deberán utilizar transacciones para las operaciones de lectura y escritura sobre las colas.
+- Las operaciones soportadas son:
+   - Crear una cola por un nombre.
+   - Listar las colas existentes.
+   - Suscribir usuario a una cola.
+   - Marcar todos los mensajes pendientes como leídos.
+   - Escribir un mensaje en la cola.
+   - Leer el siguiente mensaje de la cola.
 
 ## Especificaciones técnicas
 ### Rutas a implementar
-- `GET` Todas las rutas retornan el archivo que se encuentra guardado segun la ruta de la petición. Si la ruta solicitada no existe retornara un error 404. Si la ruta es una carpeta, retornara en un JSON la lista de archivos y subdirectorios.  
-- `POST` Cualquier ruta. Si el cuerpo de la peticion esta vacio, entonces se considerara como una operacion de creación de carpeta. Si tiene contenidos, se creará el archivo en la ruta dada.
-- `PATCH` según la variable `:command` (`cp`, `mv`), ser mueve/copia el archivo/carpeta de `:source` a `:target`.
-- `DELETE` todas las rutas eliminaran el archivo en la ruta dada. Hay que tener cuidado de no
-  permitir el borrado de carpetas que contengan cualquier objeto.
-- 10% extra si la aplicación se protege de la vulnerabilidad 'directory traversal'.
-
-### Recursos
-- Mas detalles de la directory traversal https://es.wikipedia.org/wiki/Directory_traversal
-- Definir un mismo comportamiento para todas las rutas:
-```ruby
-module FileServer
-  class API < Grape::API
-    get '*path' do
-      "You requested `#{params[:path]}`"
-    end
-  end
-end
-```
+- GET `/api/queues` listar
+- POST `/api/queues` crear, el nombre se manda en el campo 'queue'
+- POST `/api/:queue/subscribe` suscribirse, el nombre del suscriptor se manda en el campo subscriber
+- POST `/api/:queue/purge` marcar mensajes pendientes como leidos.
+- POST `/api/:queue` escribe un mensaje. El cuerpo de la petición es el contenido del mensaje.
+- POST `/api/:queue/:subscriber` Lee el siguiente mensaje del subscriptor.
+### Casos esquina
+- Si alguien se suscribe a una cola existente y que ya tiene mensajes, debera de ver los mensajes anteriores.
+- Si se tiene un mensaje y varios solicitan a la par el mismo mensaje, solo uno debe recibirlo.
+- Si se escriben 2 mensajes a la par, se debe asegurar de que el servicio almacene ambos mensajes.
+### Extra
+- 10% extra
+  - Soporta en POST `/api/:queue/:subscriber` la opción `skip_delete` al momento de leer el mensaje, que pone el mensaje en espera. Se debe agregar un identificador al mensaje y retornarlo.
+  - Agregar POST `/api/:queue/:subscriber/mark_done/:message` que recibe el identificador del mensaje y lo pone como
+  hecho.
+  - Si pasan 5 minutos y un mensaje que no se borró nunca se confirmó, se debe marcar como no leido y estar en espera de nuevo.
+  - Si se confirma un mensaje como procesado 5 minutos después, no se podrá confirmar.
