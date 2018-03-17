@@ -1,0 +1,27 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    awesome_print (1.8.0)
+    colorize (0.8.1)
+    cute_logger (0.1.9)
+      awesome_print (~> 1)
+      colorize (~> 0.8.1)
+      utf8_converter (~> 0.1)
+    kazoo-ruby (0.5.6)
+      thor (~> 0.19.1)
+      zookeeper (~> 1.4)
+    poseidon (0.0.5)
+    thor (0.19.4)
+    utf8_converter (0.1.1)
+    zookeeper (1.4.11)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cute_logger
+  kazoo-ruby
+  poseidon
+
+BUNDLED WITH
+   1.15.4

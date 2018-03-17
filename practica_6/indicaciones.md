@@ -1,58 +1,40 @@
 # Práctica 6
-#### The index leads the way
+#### *Mold, assemble, paint, pack, deliver*
 
 ## Objetivos
-- Implementar un indexador para el servidor de archivos.
-- Creación de un cliente http.
+- Aprender a utilizar el patrón de diseño `Adapter`
+- Conocimientos básicos de recabación de evidencias en sistemas de producción.
+- Aprender a instalar y utilizar Kafka de forma básica.
+- Implementación de demonios.
+- Armado de "lineas de ensamble" (pipelines).
 
-## Indicaciones
-- Tomando como base la práctica 5, debe ser modificada para integrarse al indexador.
-- En las rutas `GET` de la práctica 5, agregar la opción `hash=true`, que retornará
-  en un json el hash `sha1` del archivo.
-- El servidor indexador no almacenara ningún archivo, solo guardará en una base de datos
-  la dirección ip / puerto de dónde se almacenó el archivo y el hash, además.
-- Como respuesta al cliente, se le enviará la ruta donde esta almacenado el archivo.
-- Deberá implementarse un demonio que se encargue de estar replicando los archivos entre otros
-  servidores (buscará tener el archivo en 2 servidores a la par).
-- El registro de servidores será por base de datos
-- La comunicación hacia el servidor de archivos será por un cliente http propio.
-- Recomiendo utilizar HTTParty para hacer la comunicación.
+## Instrucciones
+- Instalar `kafka` mediante la terminal, se adjunta enlace a un tutorial para su instalación en ubuntu. Deberá instalarse ademas `zookeper`.
+- Todas las salidas de los comandos introducidos en la consola deben ser guardados y adjuntados en el archivo `evidencias_kafka.log`.
+- Con base al proyecto de ejemplo, crear una aplicación similar que levante varios demonios para cada paso del ensamblado.
+- El consumo de mensajes debe implementarse con el patrón de diseño `Adapter`, de modo que si se implementa un adaptador para el servicio realizado en la práctica 5, la aplicación pueda seguir funcionando con tan solo modificar una configuración.
 
-## Especificaciones técnicas
-### Tablas
-- server:
-  - URI - primary key
-- file:
-  - path - primary key
-  - hash
-  - status (DELETED ACTIVE PENDING_DELETE PENDING_COPY)
-  - updated_at
-- location:
-  - path - foreign key
-  - server - foreign key
-  - primary key (path, server)
+## Línea de ensamble
+- El objetivo es crear pasos **granulares** que realicen tareas pequeñas con una complejidad muy pequeña.
+- Cada paso potencialmente puede enviar mensajes nuevos para que nuevos mensajes se procesen.
+- La línea de ensamble tendrá como objetivo procesar imágenes que fueron subidas a una aplicación.
 
-### Rutas a implementar
-- `GET` buscará el archivo en algún servidor y comparará que el hash sea valido. En caso de fallo
-        borrara el archivo del servidor y buscara en otro servidor el archivo. Si no no lo encuentra
-        retornarar un error 404. Si lo encuentra, el URI donde se encuentra el recurso (http://server:port/path)  
-- `POST` creara el archivo en algún servidor y lo guardara en la base de datos. El demonio será quien lo
-         replique después.
-- `PATCH` Renombra el path del archivo en algún servidor, el archivo viejo se marca como pendiente de eliminación
-          y la nueva ruta se marca como pendiente de replicación.
-- `DELETE` Marca como eliminado el archivo. El demonio debería de eliminarlo de los servidores.
-#### Rutas a agregar en la práctica 5
-  `GET` si el parametro `hash` esta en la petición y es verdadero, se calculara el hash `sha1` y esa será la respuesta.
-#### Sobre el demonio de actualización
-- Será un hilo que se arrancara justo antes de lanzar el servidor HTTP. Hay que tener cuidado que si se cierra la aplicación, se espere a que el demonio termine su última transacción.
-- El proceso será el siguiente:
-    - Tomar el siguiente registro ordenado por `updated_at` en la base de datos que sea `PENDING_COPY` o
-      `PENDING_DELETE`.
-    - Atender el mensaje.
-    - `PENDING_COPY` se cambiará a `ACTIVE` si hay al menos 2 copias del archivo.
-    - `PENDING_DELETE` se camabiara a `DELETE` si se ha eliminado de todos los servidores.
+## Demonios
+- `NewImageUploaded`. Su objetivo es iniciar el flujo, deberá recibir la ruta del archivo con la imágen que se va a procesar.
+- `MetadataExtractor`. Utilizando `exiftool`, se extraeran los metadatos de la imagen y se almacenaran en un archivo `json`.
+- `MetadataCleaner`. De nuevo, utilizando `exiftool`, se deben remover los metadatos de la imagen.
+- `ImageConverter`. Utilizando `ImageMagick`, convertir la imagen a un formato jpg con una calidad baja y almacenarla en otro formato.
+
+## Coordinación
+Debe diseñarse una estructura que permita los pasos ser ejecutados con base a dependencias y que evite que se procesen de forma incorrecta los datos. Por ejemplo, si se procesara primero el limpiado de metadatos, el demonio que los extrae no podría hacer este trabajo.
+
+Por cada dependencia, debe crearse un tópico en kafka y escribir los mensajes a ese tópico. Por ejemplo, puede crearse un tópico para `NewImageUploaded`, y este a su vez escribir al tópico `ImagePipeline`. El demonio `MetadataExtractor` puede escribir al tópico `ImageMetadaRetrieved`, que será tomado por `MetadataCleaner`.
+
+El cuerpo del mensaje sera un json con el campo `image` con la ruta absoluta al archivo.
 
 ## Recursos
-- Uso de HTTParty https://github.com/jnunemaker/httparty
-- Calcular SHA1 en ruby https://ruby-doc.org/stdlib-2.4.0/libdoc/digest/rdoc/Digest/SHA1.html
-- Crear Hilos en Ruby https://ruby-doc.org/core-2.2.0/Thread.html
+- Exiftool en ruby  https://github.com/mceachen/exiftool.rb
+
+- Instalación de kafka https://www.digitalocean.com/community/tutorials/how-to-install-apache-kafka-on-ubuntu-14-04
+
+- ImageMagick en ruby https://github.com/minimagick/minimagick
