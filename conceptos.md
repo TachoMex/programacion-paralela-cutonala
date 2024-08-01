@@ -1,0 +1,41 @@
+Microservicios vs Sistemas monolíticos
+- Tolerancia a fallos
+- Escalabilidad
+ - Lógica
+ - Vertical
+ - Horizontal
+- Acomplamiento
+- Mantenimiento
+Problemas con los microservicios
+- Red
+- Deployments
+- Paso de mensajes
+ - json
+ - xml
+ - serialización binaria
+- Concurrencia
+  - mutex
+  - actores
+  - memoria transaccional
+- Sincronización
+  - Relojes Lógicos
+  - Relojes Naturales
+  - NTP
+Sistemas Operativos
+ - Hilo vs Proceso
+ - Concurrente vs Paralelo
+Aspectos de diseño
+ - Transparencia
+   - Réplica
+   - Localización
+   - Concurrencia
+   - Paralelismo
+   - Migración
+ - Confiabilidad
+   - Disponibilidad
+   - Tolerancia a fallos
+   - Degradación
+  - Desempeño
+   - Velocidad
+   - Utilización de recursos
+   - Balanceo de carga
